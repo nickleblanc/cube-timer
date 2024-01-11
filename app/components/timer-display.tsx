@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createSolve } from '@/app/lib/actions';
 
 export default function TimerDisplay() {
 
@@ -8,16 +9,38 @@ export default function TimerDisplay() {
     const [running, setRunning] = useState(false);
     const [startTime, setStartTime] = useState(0);
 
+    const [scramble, setScramble] = useState(0);
+
+    const solveObject = {
+        time: time,
+        scramble: 'scramble',
+    }
+
     const startTimer = () => {
+        setTime(0);
         setRunning(true);
         setStartTime(Date.now());
     }
 
+    async function stopTimer() {
+        setRunning(false);
+        solveObject.time = time;
+        solveObject.scramble = 'scramble';
+        createSolve(solveObject);
+        console.log(time);
+    }
+
     const formattedTime = () => {
         const minutes = Math.floor(time / 60000);
-        const seconds = Math.floor((time % 60000) / 1000);
+        const seconds = Math.floor((time / 1000) % 60);
         const milliseconds = Math.floor(time % 1000);
-        return `${minutes}:${seconds}:${milliseconds}`;
+        return (
+            <div>
+            <span>{minutes}:</span>
+            <span>{seconds.toString().padStart(2,"0")}:</span>
+            <span>{milliseconds.toString().padStart(3,"0")}</span>
+            </div>
+        );
       };
 
     useEffect(() => {
@@ -28,13 +51,22 @@ export default function TimerDisplay() {
             setTime(Date.now() - startTime);
         }, 10);
         return () => clearInterval(interval);
-    }, [time, startTime, running]);
+    }, [running]);
 
     return (
-        <div className="flex justify-center items-center h-64">
-            {/* {time} */}
-            {formattedTime()}
-            <button onClick={startTimer}>Start</button>
+        <div>
+        <div className={'w-screen text-white h-[100px]'}>
+            <div className="flex justify-center p-6 text-5xl font-bold font-mono">
+                {formattedTime()}
+                {/* <span>{("0" + Math.floor((time / 60000))).slice(-2)}:</span>
+                <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
+                <span>{("0" + ((time % 1000))).slice(-3)}</span> */}
+            </div>
+        </div>
+        <div className='flex justify-center space-x-10'>
+            <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={startTimer}>Start</button>
+            <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={stopTimer}>Stop</button>
+        </div>
         </div>
     )
 }
