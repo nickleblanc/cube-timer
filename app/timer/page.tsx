@@ -5,19 +5,21 @@ import NavBar from '@/app/components/navbar'
 import TimerDisplay from '@/app/components/timer-display'
 import Scramble from '@/app/components/scramble'
 import Stats from '@/app/components/stats'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { getSolves } from "@/app/lib/data";
+import { revalidatePath } from 'next/cache';
+import Timer from './timer';
 
 export default async function Home() {
 
-  const data = await prisma.user.findMany()
+  // const data = await getSolves();
 
   return (
     <main>
       <NavBar />
       <Scramble />
-      <TimerDisplay />
+      <Timer />
+      {/* <TimerDisplay /> */}
+      {/* <Stats solves={data}/> */}
       <Stats />
     </main>
   )

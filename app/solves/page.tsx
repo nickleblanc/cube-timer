@@ -7,6 +7,8 @@ export default async function Solves() {
 
     const solves = await fetchSolveData();
 
+    console.log(solves)
+
     // const [show, setShow] = useState(false);
 
     const solveList = solves.map((solve) => {
@@ -16,7 +18,7 @@ export default async function Solves() {
         let milliseconds = Math.floor(time % 1000);
         let timeFormat = `${minutes}:${seconds
           .toString()
-          .padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`;
+          .padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
         return (
           <div className="bg-slate-600 rounded-xl w-96 h-24 p-4">
             <span>{timeFormat}</span>

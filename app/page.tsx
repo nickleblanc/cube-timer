@@ -11,9 +11,9 @@ export default async function Home() {
   return (
     <main>
       <NavBar />
-      <Scramble />
+      {/* <Scramble />
       <TimerDisplay />
-      <Stats />
+      <Stats /> */}
     </main>
   )
 }
