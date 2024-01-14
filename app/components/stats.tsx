@@ -59,7 +59,7 @@ export default async function Stats() {
         .toString()
         .padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
       return (
-        <tr className="h-10 border-b border-b-slate-200/5">
+        <tr key={solve.id} className="h-10 border-b border-b-slate-200/5">
           {/* <td>{key + 1}</td> */}
           <td className="text-end">{timeFormat}</td>
         </tr>

@@ -7,8 +7,6 @@ export default async function Solves() {
 
     const solves = await fetchSolveData();
 
-    console.log(solves)
-
     // const [show, setShow] = useState(false);
 
     const solveList = solves.map((solve) => {
@@ -20,7 +18,7 @@ export default async function Solves() {
           .toString()
           .padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
         return (
-          <div className="bg-slate-600 rounded-xl w-96 h-24 p-4">
+          <div key={solve.id} className="bg-slate-600 rounded-xl w-96 h-24 p-4 m-1">
             <span>{timeFormat}</span>
           </div>
         );
@@ -28,10 +26,10 @@ export default async function Solves() {
     );
 
     return (
-        <div>
-            <NavBar />
-            {/* <Modal /> */}
-            <div className="flex flex-col items-center">{solveList}</div>
-        </div>
+        <>
+          <NavBar />
+          {/* <Modal /> */}
+          <div className="flex flex-col items-center">{solveList}</div>
+        </>
     )
 }

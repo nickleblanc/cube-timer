@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { createSolve } from '@/app/lib/actions';
 import Stats from '@/app/components/stats';
-import { useRouter } from 'next/navigation';
 
 interface TimerProps {
     onFinish: any
@@ -11,7 +10,6 @@ interface TimerProps {
 
 export default function TimerDisplay(props: TimerProps) {
 
-    const router = useRouter();
 
     const [time, setTime] = useState(0);
     const [running, setRunning] = useState(false);
@@ -36,9 +34,8 @@ export default function TimerDisplay(props: TimerProps) {
         solveObject.time = time;
         solveObject.scramble = 'scramble';
         createSolve(solveObject);
-        props.onFinish(true);
-        // router.refresh();
-        console.log(time);
+        // props.onFinish(true);
+        // console.log(time);
     }
 
     const formattedTime = () => {

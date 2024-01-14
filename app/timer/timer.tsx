@@ -11,9 +11,6 @@ export default function Timer() {
 
     console.log(timerFinished);
 
-    // revalidatePath('/');
-
-
     return (
         <>
         <TimerDisplay onFinish={setTimerFinished}/>
