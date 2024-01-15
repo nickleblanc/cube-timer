@@ -17,9 +17,9 @@ export default async function Stats() {
     let num = stats.length;
 
     return (
-        <div>
-            <NavBar />
-            <div className="p-2">
+        <>
+        <NavBar />
+        <div className="flex flex-col items-center p-2">
             <div className="w-48 h-24 bg-slate-600 rounded-lg">
                 <div className="p-4 flex flex-col">
                     <div>
@@ -28,8 +28,15 @@ export default async function Stats() {
                     <span>{timestring}</span>
                 </div>
             </div>
-            <>{num}</>
+            <div className="w-48 h-24 bg-slate-600 rounded-lg">
+                <div className="p-4 flex flex-col">
+                    <div>
+                        <p>Total Solves</p>
+                    </div>
+                    <span>{num}</span>
+                </div>
             </div>
         </div>
+        </>
     )
 }
