@@ -1,4 +1,5 @@
 import { getSolves } from "@/app/lib/data";
+import getTimeString from "../lib/timer-util";
 
 interface SolveProps {
   solves: {
@@ -51,17 +52,11 @@ export default async function Stats() {
   const solves = await getSolves();
 
   const times = solves.map((solve) => {
-      let time = solve.time;
-      let minutes = Math.floor(time / 60000);
-      let seconds = Math.floor((time / 1000) % 60);
-      let milliseconds = Math.floor(time % 1000);
-      let timeFormat = `${minutes}:${seconds
-        .toString()
-        .padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
+      let time = getTimeString(solve.time);
       return (
         <tr key={solve.id} className="h-10 border-b border-b-slate-200/5">
-          {/* <td>{key + 1}</td> */}
-          <td className="text-end">{timeFormat}</td>
+          {/* <td>{solve.id}</td> */}
+          <td className="text-end">{time}</td>
         </tr>
       );
     });
@@ -72,7 +67,7 @@ export default async function Stats() {
         <h1 className="flex justify-center p-6 text-2xl font-bold backdrop-blur-2xl">
           Recent Solves
         </h1>
-        <div className="mx-4 flex-1 overflow-auto p-2">
+        <div className="mx-4 flex-1 overflow-auto p-2 font-mono">
           <table className="w-full">
               <tbody>
                   {times}
