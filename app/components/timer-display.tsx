@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { createSolve } from '@/app/lib/actions';
 import Stats from '@/app/components/stats';
+import getTimeString from '@/app/lib/timer-util';
+import { get } from 'http';
 
 interface TimerProps {
     onFinish: any
@@ -38,19 +40,6 @@ export default function TimerDisplay(props: TimerProps) {
         // console.log(time);
     }
 
-    const formattedTime = () => {
-        const minutes = Math.floor(time / 60000);
-        const seconds = Math.floor((time / 1000) % 60);
-        const milliseconds = Math.floor(time % 1000);
-        return (
-            <div>
-            <span>{minutes}:</span>
-            <span>{seconds.toString().padStart(2,"0")}:</span>
-            <span>{milliseconds.toString().padStart(3,"0")}</span>
-            </div>
-        );
-      };
-
     useEffect(() => {
         if (!running) {
             return;
@@ -65,10 +54,7 @@ export default function TimerDisplay(props: TimerProps) {
         <>
         <div className={'w-screen text-white h-[100px]'}>
             <div className="flex justify-center p-6 text-5xl font-bold font-mono">
-                {formattedTime()}
-                {/* <span>{("0" + Math.floor((time / 60000))).slice(-2)}:</span>
-                <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
-                <span>{("0" + ((time % 1000))).slice(-3)}</span> */}
+                {getTimeString(time)}
             </div>
         </div>
         <div className='flex justify-center space-x-10'>
