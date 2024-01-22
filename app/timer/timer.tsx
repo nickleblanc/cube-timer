@@ -9,8 +9,6 @@ export default function Timer() {
 
     const [timerFinished, setTimerFinished] = useState(false);
 
-    console.log(timerFinished);
-
     return (
         <>
         <TimerDisplay onFinish={setTimerFinished}/>
