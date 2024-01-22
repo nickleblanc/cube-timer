@@ -1,5 +1,5 @@
 import { getSolves } from "@/app/lib/data";
-import getTimeString from "../lib/timer-util";
+import getTimeString from "@/app/lib/timer-util";
 
 interface SolveProps {
   solves: {
@@ -51,28 +51,35 @@ interface SolveProps {
 export default async function Stats() {
   const solves = await getSolves();
 
+  // const times = solves.map((solve) => {
+  //     let time = getTimeString(solve.time);
+  //     return (
+  //       <tr key={solve.id} className="h-10 border-b border-b-slate-200/5">
+  //         {/* <td>{solve.id}</td> */}
+  //         <td className="text-end">{time}</td>
+  //       </tr>
+  //     );
+  //   });
+
   const times = solves.map((solve) => {
-      let time = getTimeString(solve.time);
-      return (
-        <tr key={solve.id} className="h-10 border-b border-b-slate-200/5">
-          {/* <td>{solve.id}</td> */}
-          <td className="text-end">{time}</td>
-        </tr>
-      );
-    });
+    let time = getTimeString(solve.time);
+    return (
+      <div className="text-end h-[30px]" key={solve.id}>
+        <button>
+        <span>{time}</span>
+        </button>
+      </div>
+    );
+  });
   
   
     return (
-      <div className="flex w-48 flex-col border-r-2 border-t-2 border-slate-800/50 text-white shadow-xl md:w-72 lg:w-96 h-full">
+      <div className="flex w-48 flex-col border-r-2 border-t-2 border-slate-800/50 text-white shadow-xl md:w-72 lg:w-96 flex-auto">
         <h1 className="flex justify-center p-6 text-2xl font-bold backdrop-blur-2xl">
           Recent Solves
         </h1>
-        <div className="mx-4 flex-1 overflow-auto p-2 font-mono">
-          <table className="w-full">
-              <tbody>
-                  {times}
-              </tbody>
-          </table>
+        <div className="flex-auto h-[1px] overflow-auto">
+          {times}
         </div>
       </div>
     );
