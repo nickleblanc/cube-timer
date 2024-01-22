@@ -32,12 +32,12 @@ export default function TimerDisplay(props: TimerProps) {
     }
 
     async function stopTimer() {
+        // console.log(time)
         setRunning(false);
         solveObject.time = time;
         solveObject.scramble = 'scramble';
         createSolve(solveObject);
         // props.onFinish(true);
-        // console.log(time);
     }
 
     useEffect(() => {
@@ -50,13 +50,29 @@ export default function TimerDisplay(props: TimerProps) {
         return () => clearInterval(interval);
     }, [running]);
 
+    useEffect(() => {
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.code === 'Space') {
+                if (running) {
+                    console.log(time)
+                    stopTimer();
+                } else {
+                    // startTimer();
+                }
+            }
+        }
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+    , [running]);
+
     return (
         <>
         <div className={'w-screen text-white h-[100px]'}>
             <div className="flex justify-center p-6 text-5xl font-bold font-mono">
                 {getTimeString(time)}
             </div>
-        </div>
+        </div> 
         <div className='flex justify-center space-x-10'>
             <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={startTimer}>Start</button>
             <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={stopTimer}>Stop</button>
