@@ -20,11 +20,11 @@ function validateScramble(scramble: any) {
         scramble[x][0] = moves[Math.floor(Math.random() * moves.length)];
       }
     }
-    for (let x = 2; x < scramble.length; x++) {
-      while (scramble[x][0] == scramble[x - 2][0]) {
-        scramble[x][0] = moves[Math.floor(Math.random() * moves.length)];
-      }
-    }
+    // for (let x = 2; x < scramble.length; x++) {
+    //   while (scramble[x][0] == scramble[x - 2][0]) {
+    //     scramble[x][0] = moves[Math.floor(Math.random() * moves.length)];
+    //   }
+    // }
     return scramble;
 }
 
@@ -37,7 +37,7 @@ function scrambleToString(scramble: any) {
 
 export default function Scramble() {
     return (
-        <div className="flex justify-center p-6 text-xl font-bold font-mono">
+        <div className="flex justify-center p-6 text-xl font-bold font-mono h-[80px]">
             {generateScramble()}
         </div>
     )
