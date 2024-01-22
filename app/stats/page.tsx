@@ -1,6 +1,7 @@
 import { fetchSolveData } from "@/app/lib/data";
 import NavBar from "@/app/components/navbar";
-import getTimeString from "../lib/timer-util";
+import getTimeString from "@/app/lib/timer-util";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle }  from "@/app/components/ui/card";
 
 export default async function Stats() {
 
@@ -18,24 +19,24 @@ export default async function Stats() {
 
     return (
         <>
-        <NavBar />
-        <div className="flex flex-col items-center p-2">
-            <div className="w-48 h-24 bg-slate-600 rounded-lg">
-                <div className="p-4 flex flex-col">
-                    <div>
-                        <p>Time Spent</p>
-                    </div>
-                    <span>{timestring}</span>
-                </div>
-            </div>
-            <div className="w-48 h-24 bg-slate-600 rounded-lg">
-                <div className="p-4 flex flex-col">
-                    <div>
-                        <p>Total Solves</p>
-                    </div>
-                    <span>{num}</span>
-                </div>
-            </div>
+        {/* <NavBar /> */}
+        <div className="flex flex-row justify-center">
+            <Card className="w-[250px] m-2">
+                <CardHeader>
+                    <CardTitle>Time Spent Solving</CardTitle>
+                </CardHeader>
+                <CardContent className="text-green-500 text-xl font-bold">
+                    <p>{timestring}</p>
+                </CardContent>
+            </Card>
+            <Card className="w-[250px] m-2">
+                <CardHeader>
+                    <CardTitle>Total Number of Solves</CardTitle>
+                </CardHeader>
+                <CardContent className="text-blue-500 text-xl font-bold">
+                    <p>{num}</p>
+                </CardContent>
+            </Card>
         </div>
         </>
     )
