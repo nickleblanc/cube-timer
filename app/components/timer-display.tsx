@@ -73,10 +73,10 @@ export default function TimerDisplay(props: TimerProps) {
                 {getTimeString(time)}
             </div>
         </div> 
-        <div className='flex justify-center space-x-10'>
+        {/* <div className='flex justify-center space-x-10'>
             <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={startTimer}>Start</button>
             <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={stopTimer}>Stop</button>
-        </div>
+        </div> */}
         {/* <Stats /> */}
         </>
     )
