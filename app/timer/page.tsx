@@ -14,13 +14,12 @@ export default async function Home() {
   // const data = await getSolves();
 
   return (
-    <main>
-      <NavBar />
+    <>
       <Scramble />
       <Timer />
       {/* <TimerDisplay /> */}
       {/* <Stats solves={data}/> */}
       <Stats />
-    </main>
+    </>
   )
 }
