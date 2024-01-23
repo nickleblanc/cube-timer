@@ -37,7 +37,7 @@ function scrambleToString(scramble: any) {
 
 export default function Scramble() {
     return (
-        <div className="flex justify-center p-6 text-xl font-bold font-mono h-[80px]">
+        <div className="flex justify-center p-6 text-xl font-bold font-mono">
             {generateScramble()}
         </div>
     )

@@ -64,7 +64,7 @@ export default async function Stats() {
   const times = solves.map((solve) => {
     let time = getTimeString(solve.time);
     return (
-      <div className="text-end h-[30px]" key={solve.id}>
+      <div className="text-end h-[30px] pr-1" key={solve.id}>
         <button>
         <span>{time}</span>
         </button>
@@ -74,11 +74,11 @@ export default async function Stats() {
   
   
     return (
-      <div className="flex w-48 flex-col border-r-2 border-t-2 border-slate-800/50 text-white shadow-xl md:w-72 lg:w-96 flex-auto">
+      <div className="w-48 flex flex-col border-r-2 border-t-2 border-slate-800/50 text-white shadow-xl md:w-72 lg:w-96 grow">
         <h1 className="flex justify-center p-6 text-2xl font-bold backdrop-blur-2xl">
           Recent Solves
         </h1>
-        <div className="flex-auto h-[1px] overflow-auto">
+        <div className="overflow-auto grow h-2">
           {times}
         </div>
       </div>
