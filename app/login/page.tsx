@@ -2,8 +2,8 @@ import { LoginForm } from "@/app/components/auth/login-form"
 
 export default function Login() {
     return (
-        <>
-        <LoginForm />
-        </>
+        <div className="flex justify-center">
+            <LoginForm />
+        </div>
     )
 }
