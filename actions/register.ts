@@ -30,5 +30,5 @@ export async function register(values: z.infer<typeof RegisterSchema>) {
         },
     });
 
-    return { success: "Confirmation email sent!" };
+    return { success: "Account created!" };
 }
