@@ -2,7 +2,9 @@
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { RegisterSchema } from '@/schemas';
 import { useForm } from "react-hook-form";
+import { useState, startTransition } from 'react';
 import { CardWrapper } from '@/app/components/auth/card-wrapper';
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
@@ -14,14 +16,14 @@ import {
     FormLabel,
     FormMessage,  
   } from "@/app/components/ui/form";
-
-const RegisterSchema = z.object({
-    name: z.string().min(3),
-    email: z.string().email(),
-    password: z.string().min(6),
-});
+import { register } from '@/actions/register';
+import { FormError } from '@/app/components/auth/form-error';
+import { FormSuccess } from '@/app/components/auth/form-success';
 
 export function RegisterForm() {
+
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
     
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
@@ -31,10 +33,19 @@ export function RegisterForm() {
         },
     });
 
-    const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
-        console.log(data);
-    };
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+        console.log(values);
+        setError('');
+        setSuccess('');
 
+        startTransition(() => {
+            register(values)
+                .then((data) => {
+                    setError(data.error);
+                    setSuccess(data.success);
+                });
+        })
+    };
 
     return (
         <CardWrapper
@@ -65,7 +76,7 @@ export function RegisterForm() {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="" {...field} />
+                                <Input placeholder="" {...field} type='email'/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -78,13 +89,15 @@ export function RegisterForm() {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input placeholder="" {...field} />
+                                <Input placeholder="" {...field} type='password' />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
+                    <FormError message={error} />
+                    <FormSuccess message={success} />
+                    <Button type="submit" className='w-full'>Submit</Button>
                 </form>
             </Form>
         </CardWrapper>

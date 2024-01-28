@@ -5,13 +5,14 @@ import {
     CardFooter
 } from '@/app/components/ui/card';
 import { BackButton } from '@/app/components/auth/back-button';
+import { Social } from '@/app/components/auth/social';
 
 interface CardWrapperProps {
     children: React.ReactNode;
     headerLabel: string;
     backButtonLabel: string;
     backButtonHref: string;
-    showSocial: boolean;
+    showSocial?: boolean;
 }
 
 export function CardWrapper({
@@ -29,6 +30,11 @@ export function CardWrapper({
             <CardContent>
                 {children}
             </CardContent>
+            {showSocial && (
+                <CardFooter>
+                    <Social />
+                </CardFooter>
+            )}
             <CardFooter>
                 <BackButton href={backButtonHref} label={backButtonLabel} />
             </CardFooter>

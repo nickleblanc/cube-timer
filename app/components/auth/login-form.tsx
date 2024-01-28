@@ -1,10 +1,11 @@
 "use client";
 
 import { z } from 'zod';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from "react-hook-form";
-
+import { useState, startTransition } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { LoginSchema } from '@/schemas';
 import { CardWrapper } from '@/app/components/auth/card-wrapper';
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
@@ -16,13 +17,19 @@ import {
     FormLabel,
     FormMessage,  
   } from "@/app/components/ui/form";
-
-const LoginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-});
+import { login } from '@/actions/login';
+import { FormError } from '@/app/components/auth/form-error';
+import { FormSuccess } from '@/app/components/auth/form-success';
 
   export function LoginForm() {
+
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
+        ? "Email already in use with different provider!"
+        : "";
+
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -32,8 +39,21 @@ const LoginSchema = z.object({
         },
     });
 
-    const onSubmit = (data: z.infer<typeof LoginSchema>) => {
-        console.log(data);
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+        setError("");
+        setSuccess("");
+        console.log(values);
+        startTransition(() => {
+            login(values)
+                .then((data) => {
+                    if (data?.error) {
+                        setError(data.error)
+                    }
+                    if (data?.success) {
+                        setSuccess(data.success)
+                    }
+                })
+        })
     };
 
 
@@ -53,7 +73,7 @@ const LoginSchema = z.object({
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="" {...field} />
+                                <Input placeholder="" {...field} type='email' />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -66,13 +86,15 @@ const LoginSchema = z.object({
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input placeholder="" {...field} />
+                                <Input placeholder="" {...field} type='password' />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
+                    <FormError message={error || urlError} />
+                    <FormSuccess message={success} />
+                    <Button type="submit" className='w-full'>Submit</Button>
                 </form>
             </Form>
         </CardWrapper>
