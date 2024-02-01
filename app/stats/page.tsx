@@ -1,4 +1,4 @@
-import { fetchSolveData } from "@/data/data";
+import { getAllSolves } from "@/data/solve";
 import NavBar from "@/components/navbar";
 import getTimeString from "@/lib/timer-util";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 export default async function Stats() {
-  const stats = await fetchSolveData();
+  const stats = await getAllSolves();
 
   let total = 0;
   let timestring = "";

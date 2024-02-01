@@ -1,11 +1,11 @@
 import NavBar from "@/components/navbar";
 import Modal from "@/components/modal";
-import { fetchSolveData } from "@/data/data";
+import { getAllSolves } from "@/data/solve";
 import getTimeString from "@/lib/timer-util";
 // import { useState } from "react"
 
 export default async function Solves() {
-  const solves = await fetchSolveData();
+  const solves = await getAllSolves();
 
   // const [show, setShow] = useState(false);
 

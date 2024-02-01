@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createSolve } from "@/actions/actions";
+import { createSolve } from "@/actions/solve";
 import Stats from "@/components/stats";
 import getTimeString from "@/lib/timer-util";
 import { get } from "http";

@@ -1,4 +1,4 @@
-import { getSolves } from "@/data/data";
+import { getAllSolves } from "@/data/solve";
 import getTimeString from "@/lib/timer-util";
 
 interface SolveProps {
@@ -48,7 +48,7 @@ interface SolveProps {
 // }
 
 export default async function Stats() {
-  const solves = await getSolves();
+  const solves = await getAllSolves();
 
   // const times = solves.map((solve) => {
   //     let time = getTimeString(solve.time);
