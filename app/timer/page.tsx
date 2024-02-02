@@ -10,6 +10,7 @@ import Timer from "./timer";
 export default async function Home() {
   return (
     <>
+      <NavBar />
       <Scramble />
       <Timer />
       {/* <TimerDisplay /> */}

@@ -1,10 +1,8 @@
 "use client";
 
-import {
-  UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
-} from "@heroicons/react/24/outline";
+import { BsFillStopwatchFill } from "react-icons/bs";
+import { IoStatsChart } from "react-icons/io5";
+import { FaList } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -12,13 +10,13 @@ import clsx from "clsx";
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: "Timer", href: "/timer", icon: HomeIcon },
+  { name: "Timer", href: "/timer", icon: BsFillStopwatchFill },
   {
     name: "Solves",
     href: "/solves",
-    icon: DocumentDuplicateIcon,
+    icon: FaList,
   },
-  { name: "Stats", href: "/stats", icon: UserGroupIcon },
+  { name: "Stats", href: "/stats", icon: IoStatsChart },
 ];
 
 export default function NavLinks() {
@@ -32,13 +30,14 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              "flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+              "text-md group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 font-medium transition-colors hover:bg-accent hover:text-accent-foreground  disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
               {
-                "bg-sky-100 text-blue-600": pathname === link.href,
+                "bg-accent text-accent-foreground outline-none":
+                  pathname === link.href,
               },
             )}
           >
-            <LinkIcon className="w-6" />
+            <LinkIcon className="mr-2 w-5" />
             <p className="hidden md:block">{link.name}</p>
           </Link>
         );

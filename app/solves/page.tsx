@@ -23,7 +23,7 @@ export default async function Solves() {
 
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBar />
       {/* <Modal /> */}
       <div className="flex flex-col items-center">{solveList}</div>
     </>
