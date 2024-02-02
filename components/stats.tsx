@@ -1,85 +1,50 @@
 import { getAllSolves } from "@/data/solve";
 import getTimeString from "@/lib/timer-util";
-
-interface SolveProps {
-  solves: {
-    id: number;
-    time: number;
-    scramble: string;
-    createdAt: Date;
-  }[];
-}
-
-// export default async function Stats(props: SolveProps) {
-//     // const solves = await getSolves();
-
-//     // console.log(props)
-
-//     const times = props.solves.map((solve) => {
-//         let time = solve.time;
-//         let minutes = Math.floor(time / 6000);
-//         let seconds = Math.floor((time / 1000) % 60);
-//         let milliseconds = Math.floor(time % 1000);
-//         let timeFormat = `${minutes}:${seconds
-//           .toString()
-//           .padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`;
-//         return (
-//           <tr className="h-10 border-b border-b-slate-200/5">
-//             {/* <td>{key + 1}</td> */}
-//             <td className="text-end">{timeFormat}</td>
-//           </tr>
-//         );
-//       });
-
-//       return (
-//         <div className="flex w-48 flex-col border-r-2 border-t-2 border-slate-800/50 text-white shadow-xl md:w-72 lg:w-96 h-full">
-//           <h1 className="flex justify-center p-6 text-2xl font-bold backdrop-blur-2xl">
-//             Recent Solves
-//           </h1>
-//           <div className="mx-4 flex-1 overflow-auto p-2">
-//             <table className="w-full">
-//                 <tbody>
-//                     {times.reverse()}
-//                 </tbody>
-//             </table>
-//           </div>
-//         </div>
-//       );
-// }
+import { DeleteButton } from "@/components/delete-button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { IoClose } from "react-icons/io5";
 
 export default async function Stats() {
   const solves = await getAllSolves();
 
-  // const times = solves.map((solve) => {
-  //     let time = getTimeString(solve.time);
-  //     return (
-  //       <tr key={solve.id} className="h-10 border-b border-b-slate-200/5">
-  //         {/* <td>{solve.id}</td> */}
-  //         <td className="text-end">{time}</td>
-  //       </tr>
-  //     );
-  //   });
+  const solveCount = solves.length;
 
-  const times = solves.map((solve) => {
+  const times = solves.map((solve, index) => {
     let time = getTimeString(solve.time);
     return (
       <div
-        className="h-[30px] pr-1 text-end"
+        className="flex flex-col"
         key={solve.id}
       >
-        <button>
-          <span>{time}</span>
-        </button>
+        <div className="flex h-[35px] items-center justify-between px-2">
+          <span>{solveCount - index}</span>
+          <div className="flex flex-row items-center">
+            <button className="mr-2">
+              <span>{time}</span>
+            </button>
+            <DeleteButton id={solve.id}>
+              <IoClose className="h-5 w-5" />
+            </DeleteButton>
+          </div>
+        </div>
+        <Separator />
       </div>
     );
   });
 
   return (
-    <div className="flex w-48 grow flex-col border-r-2 border-t-2 border-slate-800/50 text-white shadow-xl md:w-72 lg:w-96">
-      <h1 className="flex justify-center p-6 text-2xl font-bold backdrop-blur-2xl">
-        Recent Solves
-      </h1>
-      <div className="h-2 grow overflow-auto">{times}</div>
-    </div>
+    <Card className="flex w-[400px] grow flex-col">
+      <CardHeader>
+        <CardTitle className="text-center">Recent Solves</CardTitle>
+      </CardHeader>
+      <Separator />
+      <ScrollArea className="h-2 grow">
+        <CardContent className="px-4">
+          <div className="">{times}</div>
+        </CardContent>
+      </ScrollArea>
+    </Card>
   );
 }
