@@ -1,6 +1,6 @@
 import { getAllSolves } from "@/data/solve";
+import { getTimeString } from "@/lib/timer-util";
 import NavBar from "@/components/navbar";
-import getTimeString from "@/lib/timer-util";
 import {
   Card,
   CardContent,

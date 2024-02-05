@@ -2,40 +2,40 @@
 
 import { useState, useEffect } from "react";
 import { createSolve } from "@/actions/solve";
-import Stats from "@/components/stats";
-import getTimeString from "@/lib/timer-util";
-import { get } from "http";
+import { getTimeString } from "@/lib/timer-util";
+import { cn } from "@/lib/utils";
 
 interface TimerProps {
-  onFinish: any;
+  scramble: string;
+  onFinish: () => void;
 }
 
-export default function TimerDisplay(props: TimerProps) {
+export default function TimerDisplay({ scramble, onFinish }: TimerProps) {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const [startTime, setStartTime] = useState(0);
-
-  const [scramble, setScramble] = useState(0);
+  const [inspectionTimer, setinspectionTimer] = useState(0);
+  const [inInspection, setInInspection] = useState(false);
+  const [canStart, setCanStart] = useState(false);
 
   const solveObject = {
     time: time,
-    scramble: "scramble",
+    scramble: scramble,
+    userId: "1",
   };
 
   const startTimer = () => {
     setTime(0);
     setRunning(true);
-    props.onFinish(false);
     setStartTime(Date.now());
   };
 
   async function stopTimer() {
-    // console.log(time)
     setRunning(false);
     solveObject.time = time;
-    solveObject.scramble = "scramble";
+    solveObject.scramble = scramble;
     createSolve(solveObject);
-    // props.onFinish(true);
+    onFinish();
   }
 
   useEffect(() => {
@@ -46,35 +46,59 @@ export default function TimerDisplay(props: TimerProps) {
       setTime(Date.now() - startTime);
     }, 10);
     return () => clearInterval(interval);
-  }, [running]);
+  }, [running, startTime]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.code === "Space") {
         if (running) {
-          console.log(time);
           stopTimer();
-        } else {
-          // startTimer();
+          return;
+        }
+        const date = Date.now();
+        if (!inspectionTimer) {
+          setinspectionTimer(date);
+          setInInspection(true);
+        } else if (date - inspectionTimer > 500) {
+          setCanStart(true);
         }
       }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [running]);
+  });
+
+  useEffect(() => {
+    function handleKeyUp(e: KeyboardEvent) {
+      if (e.code === "Space") {
+        if (canStart) {
+          startTimer();
+        }
+        setinspectionTimer(0);
+        setInInspection(false);
+        setCanStart(false);
+      }
+    }
+    window.addEventListener("keyup", handleKeyUp);
+    return () => window.removeEventListener("keyup", handleKeyUp);
+  });
+
+  function getTextColor() {
+    if (canStart) {
+      return "text-green-500";
+    } else if (inInspection) {
+      return "text-yellow-500";
+    }
+  }
 
   return (
-    <>
-      <div className="h-[100px] w-screen text-white">
-        <div className="flex justify-center p-6 font-mono text-5xl font-bold">
-          {getTimeString(time)}
-        </div>
-      </div>
-      {/* <div className='flex justify-center space-x-10'>
-            <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={startTimer}>Start</button>
-            <button className="flex h-[48px] w-24 grow items-center justify-center gap-2 rounded-md bg-gray-500 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"onClick={stopTimer}>Stop</button>
-        </div> */}
-      {/* <Stats /> */}
-    </>
+    <div
+      className={cn(
+        "flex justify-center p-6 font-mono text-5xl font-bold text-white",
+        getTextColor(),
+      )}
+    >
+      {getTimeString(time)}
+    </div>
   );
 }

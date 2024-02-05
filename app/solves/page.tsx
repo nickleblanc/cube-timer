@@ -1,7 +1,7 @@
 import NavBar from "@/components/navbar";
 import Modal from "@/components/modal";
 import { getAllSolves } from "@/data/solve";
-import getTimeString from "@/lib/timer-util";
+import { getTimeString } from "@/lib/timer-util";
 // import { useState } from "react"
 
 export default async function Solves() {

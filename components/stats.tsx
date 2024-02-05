@@ -1,5 +1,5 @@
 import { getAllSolves } from "@/data/solve";
-import getTimeString from "@/lib/timer-util";
+import { getTimeString } from "@/lib/timer-util";
 import { DeleteButton } from "@/components/delete-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
