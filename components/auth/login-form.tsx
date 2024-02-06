@@ -48,9 +48,9 @@ export function LoginForm() {
         if (data?.error) {
           setError(data.error);
         }
-        if (data?.success) {
-          setSuccess(data.success);
-        }
+        // if (data?.success) {
+        //   setSuccess(data.success);
+        // }
       });
     });
   };
