@@ -1,30 +1,29 @@
 import NavBar from "@/components/navbar";
-import Modal from "@/components/modal";
 import { getAllSolves } from "@/data/solve";
 import { getTimeString } from "@/lib/timer-util";
-// import { useState } from "react"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default async function Solves() {
   const solves = await getAllSolves();
 
-  // const [show, setShow] = useState(false);
-
   const solveList = solves.map((solve) => {
     const time = getTimeString(solve.time);
     return (
-      <div
+      <Card
         key={solve.id}
-        className="m-1 h-24 w-96 rounded-xl bg-slate-600 p-4"
+        className="m-1 h-[100px] w-[400px] text-lg"
       >
-        <span>{time}</span>
-      </div>
+        <CardHeader>
+          <CardTitle>{time}</CardTitle>
+        </CardHeader>
+        <CardContent>{}</CardContent>
+      </Card>
     );
   });
 
   return (
     <>
       <NavBar />
-      {/* <Modal /> */}
       <div className="flex flex-col items-center">{solveList}</div>
     </>
   );
