@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { ThemeSelector } from "@/app/settings/theme-selector";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function Settings() {
@@ -10,7 +11,9 @@ export default function Settings() {
           <CardHeader>
             <CardTitle className="text-center">Settings</CardTitle>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <ThemeSelector />
+          </CardContent>
         </Card>
       </div>
     </>
