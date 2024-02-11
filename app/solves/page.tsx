@@ -1,7 +1,7 @@
 import NavBar from "@/components/navbar";
 import { getAllSolves } from "@/data/solve";
 import { getTimeString } from "@/lib/timer-util";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { SolveCard } from "@/components/solve-card";
 
 export default async function Solves() {
   const solves = await getAllSolves();
@@ -9,15 +9,12 @@ export default async function Solves() {
   const solveList = solves.map((solve) => {
     const time = getTimeString(solve.time);
     return (
-      <Card
+      <SolveCard
         key={solve.id}
-        className="m-1 h-[100px] w-[400px] text-lg"
-      >
-        <CardHeader>
-          <CardTitle>{time}</CardTitle>
-        </CardHeader>
-        <CardContent>{}</CardContent>
-      </Card>
+        time={time}
+        scramble={solve.scramble}
+        id={solve.id}
+      />
     );
   });
 
