@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { IoClose } from "react-icons/io5";
+import Link from "next/link";
 
 export default async function Stats() {
   const solves = await getAllSolves();
@@ -22,9 +23,12 @@ export default async function Stats() {
           <span>{solveCount - index}</span>
           <div className="flex flex-row items-center">
             <button className="mr-2">
-              <span>{time}</span>
+              <Link href={`/solve/${solve.id}`}>{time}</Link>
             </button>
-            <DeleteButton id={solve.id}>
+            <DeleteButton
+              id={solve.id}
+              modal={false}
+            >
               <IoClose className="h-5 w-5" />
             </DeleteButton>
           </div>

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,8 +13,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  modal,
   children,
 }: {
+  modal: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -27,6 +30,7 @@ export default function RootLayout({
         >
           <div className="flex h-screen flex-col">
             {/* <NavBar /> */}
+            {modal}
             {children}
           </div>
         </ThemeProvider>
