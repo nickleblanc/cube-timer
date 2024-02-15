@@ -9,9 +9,10 @@ import { ScrambleVisual } from "@/components/scramble-visual";
 interface ModalProps {
   id: string;
   backButton: boolean;
+  solvePage: boolean;
 }
 
-export async function Modal({ id, backButton }: ModalProps) {
+export async function Modal({ id, backButton, solvePage }: ModalProps) {
   const solveId = id;
   const solve = await getSolveById(parseInt(solveId));
 
@@ -20,7 +21,9 @@ export async function Modal({ id, backButton }: ModalProps) {
   }
 
   return (
-    <div className="fixed z-10 flex h-full w-full items-center justify-center">
+    <div
+      className={`z-10 flex h-full w-full items-center justify-center ${solvePage ? "relative" : "fixed"}`}
+    >
       <Card className="flex h-[700px] w-[600px] flex-col">
         <CardHeader>
           <CardTitle className="flex justify-end">

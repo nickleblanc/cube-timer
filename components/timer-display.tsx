@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createSolve } from "@/actions/solve";
 import { getTimeString } from "@/lib/timer-util";
 import { cn } from "@/lib/utils";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 interface TimerProps {
   scramble: string;
@@ -24,18 +25,35 @@ export default function TimerDisplay({ scramble, onFinish }: TimerProps) {
     userId: "1",
   };
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: createSolve,
+    onMutate: () => {
+      queryClient.cancelQueries({ queryKey: ["solves"] });
+      const previousSolves = queryClient.getQueryData(["solves"]);
+      queryClient.setQueryData(["solves"], (old: any) => {
+        return [solveObject, ...old];
+      });
+      return { previousSolves };
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["solves"] });
+    },
+    mutationKey: ["createSolve"],
+  });
+
   const startTimer = () => {
     setTime(0);
     setRunning(true);
     setStartTime(Date.now());
   };
 
-  async function stopTimer() {
+  function stopTimer() {
     setRunning(false);
     solveObject.time = time;
     solveObject.scramble = scramble;
-    createSolve(solveObject);
     onFinish();
+    mutate(solveObject);
   }
 
   useEffect(() => {

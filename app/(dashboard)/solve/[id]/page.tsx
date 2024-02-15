@@ -11,6 +11,7 @@ export default function Solve({ params: { id } }: ParamsProps) {
     <Modal
       id={id}
       backButton={false}
+      solvePage={true}
     />
   );
 }

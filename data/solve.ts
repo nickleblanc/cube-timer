@@ -1,6 +1,6 @@
-import prisma from "@/lib/db";
+"use server";
 
-export const dynamic = "force-dynamic";
+import prisma from "@/lib/db";
 
 export async function getSolvesByUser(userId: string) {
   return await prisma.solve.findMany({

@@ -20,7 +20,6 @@ export default async function Solves() {
 
   return (
     <>
-      <NavBar />
       <div className="flex flex-col items-center">{solveList}</div>
     </>
   );

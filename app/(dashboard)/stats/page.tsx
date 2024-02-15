@@ -24,7 +24,6 @@ export default async function Stats() {
 
   return (
     <>
-      <NavBar />
       <div className="flex flex-row justify-center">
         <Card className="m-2 w-[250px]">
           <CardHeader>
