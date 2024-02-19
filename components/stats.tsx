@@ -49,7 +49,7 @@ export default function Stats() {
   });
 
   return (
-    <Card className="flex w-[400px] grow flex-col">
+    <Card className="flex w-[400px] flex-col">
       <CardHeader>
         <CardTitle className="text-center">Recent Solves</CardTitle>
       </CardHeader>
