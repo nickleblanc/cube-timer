@@ -1,32 +1,26 @@
-import { getSolvesByUser } from "@/data/solve";
-
-export async function getUserStats(userId: string) {
-  const solves = await getSolvesByUser(userId);
-  const solveTimes = solves.map((solve) => solve.time);
-  console.log(solveTimes);
-  const bestTime = solves.reduce((acc, solve) => {
-    return solve.time < acc ? solve.time : acc;
+export function getUserStats(solveTimes: number[]) {
+  const bestTime = solveTimes.reduce((acc, time) => {
+    return time < acc ? time : acc;
   }, Infinity);
-  const worstTime = solves.reduce((acc, solve) => {
-    return solve.time > acc ? solve.time : acc;
+
+  const worstTime = solveTimes.reduce((acc, time) => {
+    return time > acc ? time : acc;
   }, 0);
-  console.log(Math.min(...solveTimes));
-  console.log(Math.max(...solveTimes));
-  const averageOf5 = solveTimes
+
+  const last5 = solveTimes.slice(0, 5);
+
+  const averageOf5 = last5
     .slice(0, 5)
-    .filter(
-      (time) =>
-        time < Math.max(...solveTimes) && time > Math.min(...solveTimes),
-    )
+    .filter((time) => time < Math.max(...last5) && time > Math.min(...last5))
     .reduce((acc, time) => acc + time, 0);
-  const averageOf12 = solves
+
+  const last12 = solveTimes.slice(0, 12);
+
+  const averageOf12 = last12
     .slice(0, 100)
-    .filter(
-      (solve) =>
-        solve.time < Math.max(...solveTimes) &&
-        solve.time > Math.min(...solveTimes),
-    )
-    .reduce((acc, solve) => acc + solve.time, 0);
+    .filter((time) => time < Math.max(...last12) && time > Math.min(...last12))
+    .reduce((acc, time) => acc + time, 0);
+
   return {
     bestTime,
     worstTime,

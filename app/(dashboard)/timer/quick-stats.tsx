@@ -1,19 +1,28 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { getUserStats } from "@/data/stats";
+import { getSolvesByUser } from "@/data/solve";
 import { getTimeString } from "@/lib/timer-util";
 import { useQuery } from "@tanstack/react-query";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 export function QuickStats() {
-  const userId = "1";
-  const { data: stats } = useQuery({
-    queryKey: ["stats", userId],
-    queryFn: () => getUserStats(userId),
+  const user = useCurrentUser();
+  const userId = user?.id;
+  const { data: solves } = useQuery({
+    queryKey: ["solves", userId],
+    queryFn: () => getSolvesByUser(userId),
   });
-  if (!stats) {
+
+  if (!solves) {
     return null;
   }
 
-  const { bestTime, worstTime, averageOf5, averageOf12 } = stats;
+  console.log(solves);
+  const solveTimes = solves.map((solve) => solve.time);
+  console.log(solveTimes);
+
+  const { bestTime, worstTime, averageOf5, averageOf12 } =
+    getUserStats(solveTimes);
 
   return (
     <Card className="grow p-1">
@@ -31,7 +40,7 @@ export function QuickStats() {
             <CardTitle>Average of 5</CardTitle>
           </CardHeader>
           <CardContent>
-            <span>{getTimeString(averageOf5)}</span>
+            <span>{averageOf5 == 0 ? "-" : getTimeString(averageOf5)}</span>
           </CardContent>
         </Card>
         <Card className="h-[100px] w-[200px]">
@@ -39,7 +48,7 @@ export function QuickStats() {
             <CardTitle>Average of 12</CardTitle>
           </CardHeader>
           <CardContent>
-            <span>{getTimeString(averageOf12)}</span>
+            <span>{averageOf12 == 0 ? "-" : getTimeString(averageOf12)}</span>
           </CardContent>
         </Card>
         <Card className="h-[100px] w-[200px]">
@@ -47,7 +56,7 @@ export function QuickStats() {
             <CardTitle>Worst</CardTitle>
           </CardHeader>
           <CardContent>
-            <span>{getTimeString(worstTime)}</span>
+            <span>{worstTime == 0 ? "-" : getTimeString(worstTime)}</span>
           </CardContent>
         </Card>
       </CardContent>

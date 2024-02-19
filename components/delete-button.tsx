@@ -3,6 +3,7 @@
 import { deleteSolve } from "@/actions/solve";
 import { useRouter } from "next/navigation";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface DeleteButtonProps {
   id: number;
@@ -11,19 +12,21 @@ interface DeleteButtonProps {
 }
 
 export function DeleteButton({ id, modal, children }: DeleteButtonProps) {
+  const user = useCurrentUser();
+  const userId = user?.id;
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: deleteSolve,
     onMutate: () => {
-      queryClient.cancelQueries({ queryKey: ["solves"] });
-      const previousSolves = queryClient.getQueryData(["solves"]);
-      queryClient.setQueryData(["solves"], (old: any) => {
+      queryClient.cancelQueries({ queryKey: ["solves", userId] });
+      const previousSolves = queryClient.getQueryData(["solves", userId]);
+      queryClient.setQueryData(["solves", userId], (old: any) => {
         return old.filter((solve: any) => solve.id !== id);
       });
       return { previousSolves };
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["solves"] });
+      queryClient.invalidateQueries({ queryKey: ["solves", userId] });
     },
     mutationKey: ["deleteSolve"],
   });

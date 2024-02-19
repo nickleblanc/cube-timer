@@ -6,10 +6,13 @@ import prisma from "@/lib/db";
 interface Solve {
   time: number;
   scramble: string;
-  userId: string;
+  userId: string | undefined;
 }
 
 export async function createSolve(solve: Solve) {
+  if (!solve.userId) {
+    return;
+  }
   await prisma.solve.create({
     data: {
       time: solve.time,

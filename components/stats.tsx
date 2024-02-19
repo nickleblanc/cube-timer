@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllSolves } from "@/data/solve";
+import { getSolvesByUser } from "@/data/solve";
 import { getTimeString } from "@/lib/timer-util";
 import { DeleteButton } from "@/components/delete-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,11 +9,14 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 export default function Stats() {
+  const user = useCurrentUser();
+  const userId = user?.id;
   const { data: solves } = useQuery({
-    queryKey: ["solves"],
-    queryFn: () => getAllSolves(),
+    queryKey: ["solves", userId],
+    queryFn: () => getSolvesByUser(userId),
   });
 
   if (!solves) {

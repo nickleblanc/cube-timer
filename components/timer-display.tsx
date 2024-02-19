@@ -5,6 +5,7 @@ import { createSolve } from "@/actions/solve";
 import { getTimeString } from "@/lib/timer-util";
 import { cn } from "@/lib/utils";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface TimerProps {
   scramble: string;
@@ -19,25 +20,28 @@ export default function TimerDisplay({ scramble, onFinish }: TimerProps) {
   const [inInspection, setInInspection] = useState(false);
   const [canStart, setCanStart] = useState(false);
 
+  const user = useCurrentUser();
+  const userId = user?.id;
+
   const solveObject = {
     time: time,
     scramble: scramble,
-    userId: "1",
+    userId: user?.id,
   };
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: createSolve,
     onMutate: () => {
-      queryClient.cancelQueries({ queryKey: ["solves"] });
-      const previousSolves = queryClient.getQueryData(["solves"]);
-      queryClient.setQueryData(["solves"], (old: any) => {
+      queryClient.cancelQueries({ queryKey: ["solves", userId] });
+      const previousSolves = queryClient.getQueryData(["solves", userId]);
+      queryClient.setQueryData(["solves", userId], (old: any) => {
         return [solveObject, ...old];
       });
       return { previousSolves };
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["solves"] });
+      queryClient.invalidateQueries({ queryKey: ["solves", userId] });
     },
     mutationKey: ["createSolve"],
   });

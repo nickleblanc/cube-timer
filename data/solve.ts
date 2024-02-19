@@ -2,7 +2,10 @@
 
 import prisma from "@/lib/db";
 
-export async function getSolvesByUser(userId: string) {
+export async function getSolvesByUser(userId: string | undefined) {
+  if (!userId) {
+    return null;
+  }
   return await prisma.solve.findMany({
     where: {
       userId,
