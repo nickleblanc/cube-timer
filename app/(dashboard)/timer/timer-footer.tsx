@@ -1,22 +1,30 @@
-"use client";
-
-import { useScrambleStore } from "@/stores/scramble";
 import Stats from "@/components/stats";
 import { QuickStats } from "./quick-stats";
-import { ScrambleVisual } from "@/components/scramble-visual";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { TimerScramble } from "./timer-scramble";
+import { getSolvesByUser } from "@/data/solve";
+import { auth } from "@/auth";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
-export default function TimerFooter() {
-  const scramble = useScrambleStore((state) => state.scramble);
+export default async function TimerFooter() {
+  const session = await auth();
+  const userId = session?.user?.id;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["solves", userId],
+    queryFn: () => getSolvesByUser(userId),
+  });
+
   return (
     <div className="m-1 flex space-x-2">
-      <Stats />
-      <QuickStats />
-      <Card className="flex items-center justify-center">
-        <CardContent className="flex items-center justify-center p-2">
-          <ScrambleVisual scramble={scramble} />
-        </CardContent>
-      </Card>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Stats />
+        <QuickStats />
+        <TimerScramble />
+      </HydrationBoundary>
     </div>
   );
 }

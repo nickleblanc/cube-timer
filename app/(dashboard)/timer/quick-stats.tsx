@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { getUserStats } from "@/data/stats";
 import { getSolvesByUser } from "@/data/solve";
@@ -17,9 +19,7 @@ export function QuickStats() {
     return null;
   }
 
-  console.log(solves);
   const solveTimes = solves.map((solve) => solve.time);
-  console.log(solveTimes);
 
   const { bestTime, worstTime, averageOf5, averageOf12 } =
     getUserStats(solveTimes);
