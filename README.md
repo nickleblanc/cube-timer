@@ -2,7 +2,7 @@
 
 Cube Timer is an application for speedcubers to record their solve times and visualize their statistics.
 
-![alt text](https://github.com/nickleblanc/cube-timer-next/tree/main/public/timer.png?raw=true)
+![alt text](public/timer.png)
 
 ## Features
 
