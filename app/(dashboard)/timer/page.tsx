@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <>
       <TimerModule />
-      <TimerFooter />
+      <div className="flex flex-col justify-end">
+        <TimerFooter />
+      </div>
     </>
   );
 }

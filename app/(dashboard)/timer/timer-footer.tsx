@@ -19,7 +19,7 @@ export default async function TimerFooter() {
   });
 
   return (
-    <div className="m-1 flex space-x-2">
+    <div className="flex space-x-2 p-2">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Stats />
         <QuickStats />

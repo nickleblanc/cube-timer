@@ -32,12 +32,12 @@ export default function NavLinks() {
             className={clsx(
               "text-md group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 font-medium transition-colors hover:bg-accent hover:text-accent-foreground  disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
               {
-                "bg-accent text-accent-foreground outline-none":
+                "bg-secondary text-accent-foreground outline-none":
                   pathname === link.href,
               },
             )}
           >
-            <LinkIcon className="mr-2 w-5" />
+            <LinkIcon className="mr-0 w-5 md:mr-2" />
             <p className="hidden md:block">{link.name}</p>
           </Link>
         );

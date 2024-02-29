@@ -6,7 +6,6 @@ import { DeleteButton } from "@/components/delete-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -41,9 +40,7 @@ export default function Stats() {
             <DeleteButton
               id={solve.id}
               modal={false}
-            >
-              <IoClose className="h-5 w-5" />
-            </DeleteButton>
+            />
           </div>
         </div>
         <Separator />
@@ -52,7 +49,7 @@ export default function Stats() {
   });
 
   return (
-    <Card className="flex w-[400px] flex-col">
+    <Card className="flex w-[450px] flex-col">
       <CardHeader>
         <CardTitle className="text-center">Recent Solves</CardTitle>
       </CardHeader>

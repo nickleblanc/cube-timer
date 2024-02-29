@@ -23,7 +23,7 @@ export default function Timer() {
   }, [scramble, setScrambleStore]);
 
   return (
-    <div className="flex h-[500px] flex-col justify-center">
+    <div className="flex grow flex-col justify-center">
       <Scramble scramble={scramble} />
       <TimerDisplay
         scramble={scramble}

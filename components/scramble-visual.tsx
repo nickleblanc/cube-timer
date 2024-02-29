@@ -4,21 +4,22 @@ const directionsMap = new Map([
   ["2", 2],
 ]);
 
+const colorMap = new Map([
+  ["w", "bg-white"],
+  ["o", "bg-orange-500"],
+  ["g", "bg-green-500"],
+  ["r", "bg-red-500"],
+  ["b", "bg-blue-500"],
+  ["y", "bg-yellow-500"],
+]);
+
+const cubeColors = ["w", "o", "g", "r", "b", "y"];
+
 interface ScrambleVisualProps {
   scramble: string;
 }
 
 export function ScrambleVisual({ scramble }: ScrambleVisualProps) {
-  const colorMap = new Map([
-    ["w", "bg-white"],
-    ["o", "bg-orange-500"],
-    ["g", "bg-green-500"],
-    ["r", "bg-red-500"],
-    ["b", "bg-blue-500"],
-    ["y", "bg-yellow-500"],
-  ]);
-
-  const cubeColors = ["w", "o", "g", "r", "b", "y"];
   const cube: string[][][] = [
     [[], [], []],
     [[], [], []],
@@ -332,4 +333,49 @@ function turnCube(cube: string[][][], scramble: string) {
       }
     }
   }
+}
+
+export function FaceScramble({ scramble }: ScrambleVisualProps) {
+  const cube: string[][][] = [
+    [[], [], []],
+    [[], [], []],
+    [[], [], []],
+    [[], [], []],
+    [[], [], []],
+    [[], [], []],
+  ];
+
+  for (let i = 0; i < cubeColors.length; i++) {
+    for (let j = 0; j < 3; j++) {
+      for (let k = 0; k < 3; k++) {
+        cube[i][j].push(cubeColors[i]);
+      }
+    }
+  }
+
+  turnCube(cube, scramble);
+
+  const spanElements = [];
+  for (let i = 0; i < cubeColors.length; i++) {
+    for (let j = 0; j < 3; j++) {
+      for (let k = 0; k < 3; k++) {
+        spanElements.push(
+          <span
+            key={i}
+            className={`${colorMap.get(cube[i][j][k])} rounded-sm `}
+          ></span>,
+        );
+      }
+    }
+  }
+
+  return (
+    <div className="h-[110px] w-[115px] p-2">
+      <div className="grid h-full w-full grid-cols-1 grid-rows-1 gap-2 p-2">
+        <div className="grid grid-cols-3 grid-rows-3 gap-1">
+          {spanElements.slice(18, 27)}
+        </div>
+      </div>
+    </div>
+  );
 }

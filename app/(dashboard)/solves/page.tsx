@@ -20,6 +20,7 @@ export default async function Solves() {
         time={time}
         scramble={solve.scramble}
         id={solve.id}
+        date={solve.createdAt}
       />
     );
   });

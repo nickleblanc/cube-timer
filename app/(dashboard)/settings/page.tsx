@@ -10,6 +10,7 @@ export default function Settings() {
             <CardTitle className="text-center">Settings</CardTitle>
           </CardHeader>
           <CardContent>
+            <p className="pb-2 text-base font-bold">Theme</p>
             <ThemeSelector />
           </CardContent>
         </Card>

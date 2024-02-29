@@ -21,42 +21,50 @@ export function QuickStats() {
 
   const solveTimes = solves.map((solve) => solve.time);
 
-  const { bestTime, worstTime, averageOf5, averageOf12 } =
+  const { bestTime, worstTime, averageOf5, averageOf12, average } =
     getUserStats(solveTimes);
 
   return (
-    <Card className="grow p-1">
-      <CardContent className="grid h-full grid-cols-2 content-center justify-items-center gap-y-1 px-4">
-        <Card className="h-[100px] w-[200px]">
+    <Card className="hidden grow items-center justify-center p-1 lg:flex ">
+      <CardContent className="grid h-full w-full grid-cols-2 grid-rows-3 content-center justify-items-center gap-1 p-2">
+        <Card className="row-span-2 w-full">
           <CardHeader>
             <CardTitle>PB</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-col items-center justify-end p-5 text-4xl font-bold">
             <span>{bestTime == Infinity ? "-" : getTimeString(bestTime)}</span>
           </CardContent>
         </Card>
-        <Card className="h-[100px] w-[200px]">
-          <CardHeader>
+        <Card className="row-span-1 h-[100px] w-full">
+          <CardHeader className="pb-3">
+            <CardTitle>Worst</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center text-lg font-bold">
+            <span>{worstTime == 0 ? "-" : getTimeString(worstTime)}</span>
+          </CardContent>
+        </Card>
+        <Card className="h-[100px] w-full">
+          <CardHeader className="pb-3">
+            <CardTitle>Average</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center text-lg font-bold">
+            <span>{average == 0 ? "-" : getTimeString(average)}</span>
+          </CardContent>
+        </Card>
+        <Card className="h-[100px] w-full">
+          <CardHeader className="pb-3">
             <CardTitle>Average of 5</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="text-center text-lg font-bold">
             <span>{averageOf5 == 0 ? "-" : getTimeString(averageOf5)}</span>
           </CardContent>
         </Card>
-        <Card className="h-[100px] w-[200px]">
-          <CardHeader>
+        <Card className="h-[100px] w-full">
+          <CardHeader className="pb-3">
             <CardTitle>Average of 12</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="text-center text-lg font-bold">
             <span>{averageOf12 == 0 ? "-" : getTimeString(averageOf12)}</span>
-          </CardContent>
-        </Card>
-        <Card className="h-[100px] w-[200px]">
-          <CardHeader>
-            <CardTitle>Worst</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <span>{worstTime == 0 ? "-" : getTimeString(worstTime)}</span>
           </CardContent>
         </Card>
       </CardContent>

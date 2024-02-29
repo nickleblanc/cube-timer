@@ -9,6 +9,13 @@ export function getUserStats(solveTimes: number[]) {
     return time > acc ? time : acc;
   }, 0);
 
+  let average =
+    solveTimes.reduce((acc, time) => acc + time, 0) / solveTimes.length;
+
+  if (isNaN(average)) {
+    average = 0;
+  }
+
   let averageOf5 = 0;
   let averageOf12 = 0;
   let averageOf100 = 0;
@@ -47,6 +54,7 @@ export function getUserStats(solveTimes: number[]) {
   return {
     bestTime,
     worstTime,
+    average,
     averageOf5: averageOf5 / 3,
     averageOf12: averageOf12 / 10,
     averageOf100: averageOf100 / 98,

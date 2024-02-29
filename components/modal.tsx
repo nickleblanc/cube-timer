@@ -3,7 +3,6 @@ import { getTimeString } from "@/lib/timer-util";
 import { BackButton } from "@/components/back-button";
 import { DeleteButton } from "@/components/delete-button";
 import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ScrambleVisual } from "@/components/scramble-visual";
 
 interface ModalProps {
@@ -22,26 +21,37 @@ export async function Modal({ id, backButton, solvePage }: ModalProps) {
 
   return (
     <div
-      className={`z-10 flex h-full w-full items-center justify-center ${solvePage ? "relative" : "fixed"}`}
+      className={`z-10 flex h-full w-full items-center justify-center bg-black/70 ${solvePage ? "relative" : "fixed"}`}
     >
       <Card className="flex h-[700px] w-[600px] flex-col">
         <CardHeader>
-          <CardTitle className="flex justify-end">
+          <CardTitle className="flex justify-between">
             <DeleteButton
               id={solve.id}
               modal
-            >
-              <Button variant="destructive">Delete</Button>
-            </DeleteButton>
+            />
             {backButton && <BackButton />}
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex grow flex-col items-center justify-between">
+        <CardContent className="flex grow flex-col items-center justify-between p-2">
           <div className="flex flex-col items-center">
-            <div className="p-8 text-5xl">{getTimeString(solve.time)}</div>
-            <div className="text-md font-mono font-bold">{solve.scramble}</div>
+            <div className="p-8 font-mono text-5xl font-bold">
+              {getTimeString(solve.time)}
+            </div>
+            <div className="pb-10 text-sm">
+              {solve.createdAt.toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </div>
           </div>
-          <ScrambleVisual scramble={solve.scramble} />
+          <div className="flex flex-col items-center pb-10">
+            <ScrambleVisual scramble={solve.scramble} />
+            <div className="text-md pt-6 font-mono">{solve.scramble}</div>
+          </div>
         </CardContent>
       </Card>
     </div>
