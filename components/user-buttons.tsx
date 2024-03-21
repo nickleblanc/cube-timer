@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { FaUser } from "react-icons/fa";
 
 export async function UserButtons() {
   const session = await auth();
@@ -22,9 +23,11 @@ export async function UserButtons() {
           <Avatar>
             <AvatarImage
               src={session.user?.image ?? ""}
-              alt="@shadcn"
+              alt="avatar"
             />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>
+              <FaUser />
+            </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-52">
