@@ -23,14 +23,12 @@ export default async function Stats() {
   } = getUserStats(solveTimes);
 
   let total = 0;
-  let timestring = "";
 
   for (const solve of solves) {
     total += solve.time;
-    timestring = getTimeString(total);
   }
 
-  let num = solves.length;
+  let numSolves = solves.length;
 
   return (
     <div className="flex h-full flex-col justify-center">
@@ -41,7 +39,7 @@ export default async function Stats() {
               <CardTitle>Personal Best</CardTitle>
             </CardHeader>
             <CardContent className="text-xl font-bold text-green-500">
-              <p>{getTimeString(bestTime)}</p>
+              <p>{bestTime == Infinity ? "-" : getTimeString(bestTime)}</p>
             </CardContent>
           </Card>
           <Card className="w-[250px]">
@@ -49,7 +47,7 @@ export default async function Stats() {
               <CardTitle>Time Spent Solving</CardTitle>
             </CardHeader>
             <CardContent className="text-xl font-bold text-gray-400">
-              <p>{timestring}</p>
+              <p>{total == 0 ? "-" : getTimeString(total)}</p>
             </CardContent>
           </Card>
           <Card className="w-[250px]">
@@ -65,14 +63,12 @@ export default async function Stats() {
               <CardTitle>Total Number of Solves</CardTitle>
             </CardHeader>
             <CardContent className="text-xl font-bold text-blue-500">
-              <p>{num}</p>
+              <p>{numSolves}</p>
             </CardContent>
           </Card>
         </div>
       </div>
       <div className="flex flex-row justify-center">
-        <div></div>
-        {/* <div></div> */}
         <Card className="m-4 w-[508px]">
           <CardHeader>
             <CardTitle>Averages</CardTitle>
