@@ -2,6 +2,8 @@
 
 Cube Timer is an application for speedcubers to record their solve times and visualize their statistics.
 
+URL: https://cube-timer-next.vercel.app/
+
 ![alt text](public/timer.png)
 
 ## Features
